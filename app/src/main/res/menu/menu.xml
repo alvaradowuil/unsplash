@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/unsplash_option"
+        android:title="@string/option_nav_unsplash"
+        android:icon="@drawable/unsplash_icon" />
+    <item android:id="@+id/favorites_option"
+        android:title="@string/option_nav_favorites"
+        android:icon="@drawable/favorite_icon" />
+</menu>
