@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -87,7 +86,6 @@ class UnsplashFragment : Fragment(), PhotosAdapter.ItemClickListener {
                 }
 
                 override fun onQueryTextChange(newText: String?): Boolean {
-                    Log.d("WUIL", "onQueryTextChange newText: $newText")
                     return true
                 }
             }
@@ -105,7 +103,7 @@ class UnsplashFragment : Fragment(), PhotosAdapter.ItemClickListener {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.action_search ->                 // Not implemented here
+            R.id.action_search ->
                 return false
             else -> {
             }

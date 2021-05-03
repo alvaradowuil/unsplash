@@ -25,12 +25,14 @@ class UnsplashViewModel : ViewModel() {
     fun getPhotos() {
         showProgress.postValue(true)
         CoroutineScope(Dispatchers.IO).launch {
-            try{
-                val call = ClientHttp.getRetrofit(BuildConfig.BASE_URL).create(APIService::class.java).getPhotos(
-                    BuildConfig.ACCESS_KEY,
-                    "photos/?page=$page",
-                    BuildConfig.CLIENT_ID
-                )
+            try {
+                val call =
+                    ClientHttp.getRetrofit(BuildConfig.BASE_URL).create(APIService::class.java)
+                        .getPhotos(
+                            BuildConfig.ACCESS_KEY,
+                            "photos/?page=$page",
+                            BuildConfig.CLIENT_ID
+                        )
 
                 if (call.isSuccessful) {
                     val photos = call.body()
@@ -51,13 +53,15 @@ class UnsplashViewModel : ViewModel() {
     fun searchPhotos(query: String) {
         showProgress.postValue(true)
         CoroutineScope(Dispatchers.IO).launch {
-            try{
-                val call = ClientHttp.getRetrofit(BuildConfig.BASE_URL).create(APIService::class.java).searchPhoto(
-                    BuildConfig.ACCESS_KEY,
-                    "search/photos/?page=$page",
-                    BuildConfig.CLIENT_ID,
-                    query
-                )
+            try {
+                val call =
+                    ClientHttp.getRetrofit(BuildConfig.BASE_URL).create(APIService::class.java)
+                        .searchPhoto(
+                            BuildConfig.ACCESS_KEY,
+                            "search/photos/?page=$page",
+                            BuildConfig.CLIENT_ID,
+                            query
+                        )
 
                 if (call.isSuccessful) {
                     val searchPhotoResponse = call.body()
@@ -97,10 +101,10 @@ class UnsplashViewModel : ViewModel() {
 
         photo.user?.let { user ->
             userDb = user.convertToUserDb(photo.id!!)
-            user.links?.let {  links ->
+            user.links?.let { links ->
                 userLinksDb = links.convertToUserLinksDb(user.id!!)
             }
-            user.profileImage?.let {  profileImage ->
+            user.profileImage?.let { profileImage ->
                 profileImageDb = profileImage.convertToUserProfileImageDb(user.id!!)
             }
         }
@@ -130,7 +134,8 @@ class UnsplashViewModel : ViewModel() {
                     }
 
                     profileImageDb?.let { profileImage ->
-                        val userProfileImageDao = UnsplashDb.getInstance(context).userProfileImageDao
+                        val userProfileImageDao =
+                            UnsplashDb.getInstance(context).userProfileImageDao
                         userProfileImageDao.insert(profileImage)
                     }
                 }

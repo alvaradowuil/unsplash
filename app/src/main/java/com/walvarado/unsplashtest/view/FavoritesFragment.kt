@@ -4,9 +4,9 @@ import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.*
-import android.view.View.*
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.ImageView
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
@@ -88,7 +88,6 @@ class FavoritesFragment : Fragment(), PhotosAdapter.ItemClickListener {
                 }
 
                 override fun onQueryTextChange(newText: String?): Boolean {
-                    Log.d("WUIL", "onQueryTextChange newText: $newText")
                     return true
                 }
             }
@@ -106,7 +105,7 @@ class FavoritesFragment : Fragment(), PhotosAdapter.ItemClickListener {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.action_search ->                 // Not implemented here
+            R.id.action_search ->
                 return false
             else -> {
             }
