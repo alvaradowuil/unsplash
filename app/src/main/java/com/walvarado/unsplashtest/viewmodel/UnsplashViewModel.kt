@@ -25,12 +25,14 @@ class UnsplashViewModel : ViewModel() {
     fun getPhotos() {
         showProgress.postValue(true)
         CoroutineScope(Dispatchers.IO).launch {
-            try{
-                val call = ClientHttp.getRetrofit(BuildConfig.BASE_URL).create(APIService::class.java).getPhotos(
-                    BuildConfig.ACCESS_KEY,
-                    "photos/?page=$page",
-                    BuildConfig.ACCESS_KEY
-                )
+            try {
+                val call =
+                    ClientHttp.getRetrofit(BuildConfig.BASE_URL).create(APIService::class.java)
+                        .getPhotos(
+                            BuildConfig.ACCESS_KEY,
+                            "photos/?page=$page",
+                            BuildConfig.CLIENT_ID
+                        )
 
                 if (call.isSuccessful) {
                     val photos = call.body()
@@ -43,6 +45,36 @@ class UnsplashViewModel : ViewModel() {
                 showProgress.postValue(false)
             } catch (e: Throwable) {
                 requestError.postValue(RequestError.getByValue(0).toString())
+                showProgress.postValue(false)
+            }
+        }
+    }
+
+    fun searchPhotos(query: String) {
+        showProgress.postValue(true)
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val call =
+                    ClientHttp.getRetrofit(BuildConfig.BASE_URL).create(APIService::class.java)
+                        .searchPhoto(
+                            BuildConfig.ACCESS_KEY,
+                            "search/photos/?page=$page",
+                            BuildConfig.CLIENT_ID,
+                            query
+                        )
+
+                if (call.isSuccessful) {
+                    val searchPhotoResponse = call.body()
+                    page += 1
+                    unsplashPhotos.postValue(ArrayList())
+                    unsplashPhotos.postValue(searchPhotoResponse!!.results)
+                } else {
+                    requestError.postValue(RequestError.getByValue(call.code()).toString())
+                }
+                showProgress.postValue(false)
+            } catch (e: Throwable) {
+                requestError.postValue(RequestError.getByValue(0).toString())
+                showProgress.postValue(false)
             }
         }
     }
@@ -69,10 +101,10 @@ class UnsplashViewModel : ViewModel() {
 
         photo.user?.let { user ->
             userDb = user.convertToUserDb(photo.id!!)
-            user.links?.let {  links ->
+            user.links?.let { links ->
                 userLinksDb = links.convertToUserLinksDb(user.id!!)
             }
-            user.profileImage?.let {  profileImage ->
+            user.profileImage?.let { profileImage ->
                 profileImageDb = profileImage.convertToUserProfileImageDb(user.id!!)
             }
         }
@@ -102,7 +134,8 @@ class UnsplashViewModel : ViewModel() {
                     }
 
                     profileImageDb?.let { profileImage ->
-                        val userProfileImageDao = UnsplashDb.getInstance(context).userProfileImageDao
+                        val userProfileImageDao =
+                            UnsplashDb.getInstance(context).userProfileImageDao
                         userProfileImageDao.insert(profileImage)
                     }
                 }
