@@ -21,4 +21,4 @@ Para desarrollar esta aplicación se utilizaron las siguientes herramientas / te
 - [DataBinding](https://developer.android.com/topic/libraries/data-binding)
 - [LiveData](https://developer.android.com/reference/androidx/lifecycle/LiveData)
 
-- [Descargar apk de prueba](https://drive.google.com/file/d/11vx_xsfuyUkQLHjQnTwgNLq4r4uWGyks/view?usp=sharing)
+[Descargar apk de prueba](https://drive.google.com/file/d/11vx_xsfuyUkQLHjQnTwgNLq4r4uWGyks/view?usp=sharing)
