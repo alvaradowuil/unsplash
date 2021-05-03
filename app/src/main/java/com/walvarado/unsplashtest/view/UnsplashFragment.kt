@@ -1,17 +1,24 @@
 package com.walvarado.unsplashtest.view
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.walvarado.unsplashtest.Utils
 import com.walvarado.unsplashtest.databinding.UnsplashFragmentBinding
-import com.walvarado.unsplashtest.model.UnsplashPhoto
+import com.walvarado.unsplashtest.model.Photo
+import com.walvarado.unsplashtest.model.db.PhotoDb
 import com.walvarado.unsplashtest.viewmodel.UnsplashViewModel
 
 class UnsplashFragment : Fragment(), PhotosAdapter.ItemClickListener {
@@ -22,11 +29,12 @@ class UnsplashFragment : Fragment(), PhotosAdapter.ItemClickListener {
     private lateinit var binding: UnsplashFragmentBinding
     private lateinit var viewModel: UnsplashViewModel
     private lateinit var photosAdapter: PhotosAdapter
-    private val unsplashPhotos = ArrayList<UnsplashPhoto>()
+    private val unsplashPhotos = ArrayList<Photo>()
     private var layoutManager: LinearLayoutManager? = null
     private val lastVisibleItemPosition: Int
         get() = layoutManager!!.findLastVisibleItemPosition()
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,7 +43,23 @@ class UnsplashFragment : Fragment(), PhotosAdapter.ItemClickListener {
         viewModel = ViewModelProvider(this).get(UnsplashViewModel::class.java)
 
         initRecyclerView()
-        viewModel.getPhotos()
+
+        if (Utils.isOnline(activity!!)){
+            binding.connectionError.root.visibility = GONE
+            viewModel.getPhotos()
+        } else {
+            binding.connectionError.root.visibility = VISIBLE
+        }
+
+        viewModel.unsplashPhotos.observe(this, Observer { photos ->
+            unsplashPhotos.addAll(photos)
+            photosAdapter.notifyDataSetChanged()
+        })
+
+        viewModel.showProgress.observe(this, Observer { showProgress ->
+            binding.progress.visibility = if (showProgress) VISIBLE else GONE
+        })
+
         return binding.root
     }
 
@@ -44,11 +68,6 @@ class UnsplashFragment : Fragment(), PhotosAdapter.ItemClickListener {
         binding.rvPhotos.layoutManager = layoutManager
         photosAdapter = PhotosAdapter(context!!, unsplashPhotos, this)
         binding.rvPhotos.adapter = photosAdapter
-
-        viewModel.unsplashPhotos.observe(this, Observer { photos ->
-            unsplashPhotos.addAll(photos)
-            photosAdapter.notifyDataSetChanged()
-        })
 
         setRecyclerViewScrollListener()
     }
@@ -71,7 +90,8 @@ class UnsplashFragment : Fragment(), PhotosAdapter.ItemClickListener {
         startActivity(intent)
     }
 
-    override fun setFav(photo: UnsplashPhoto) {
-        TODO("Not yet implemented")
+    override fun statusFavoriteChange(photo: Photo, position: Int) {
+        viewModel.savePhoto(activity!!.applicationContext, photo)
+        Toast.makeText(activity!!, "Guardando favorito", Toast.LENGTH_LONG).show()
     }
 }

@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Unsplash Test</string>
 
-    <string name="option_nav_unsplash">Unsplash</string>
+    <string name="option_nav_unsplash">Imágenes</string>
     <string name="option_nav_favorites">Favoritos</string>
+
+    <string name="empty_favs">Aún no tienes favoritos. En la sección de imágenes puedes seleccionar como favoritas y luego verlas aquí.</string>
+    <string name="connection_error">Lo sentimos. Usted no cuenta con coneción a internet en este momento.</string>
 </resources>

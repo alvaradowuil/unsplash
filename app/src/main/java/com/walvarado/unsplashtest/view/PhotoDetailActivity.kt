@@ -1,14 +1,16 @@
 package com.walvarado.unsplashtest.view
 
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.walvarado.unsplashtest.Utils
 import com.walvarado.unsplashtest.databinding.ActivityPhotoDetailBinding
-import com.walvarado.unsplashtest.model.UnsplashPhoto
+import com.walvarado.unsplashtest.model.Photo
 import com.walvarado.unsplashtest.viewmodel.PhotoDetailViewModel
 
 class PhotoDetailActivity : AppCompatActivity() {
@@ -21,10 +23,13 @@ class PhotoDetailActivity : AppCompatActivity() {
     private lateinit var viewModel: PhotoDetailViewModel
     private var linkSelf: String? = null
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPhotoDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val photoId = intent.extras!!.get(EXTRA_PHOTO_ID).toString()
 
         viewModel = ViewModelProvider(this).get(PhotoDetailViewModel::class.java)
 
@@ -32,11 +37,11 @@ class PhotoDetailActivity : AppCompatActivity() {
             showDetail(photo)
         })
 
-        val photoId = intent.extras!!.get(EXTRA_PHOTO_ID).toString()
-        viewModel.getPhotos(photoId)
+        val isOnline = Utils.isOnline(this)
+        viewModel.getPhotos(this, photoId, isOnline)
 
         binding.ivUser.setOnClickListener(View.OnClickListener {
-            if (linkSelf != null) {
+            if (linkSelf != null && isOnline) {
                 val intent = Intent(this, UserDetailActivity::class.java)
                 intent.putExtra(UserDetailActivity.EXTRA_LINK_SELF, linkSelf)
                 startActivity(intent)
@@ -44,7 +49,7 @@ class PhotoDetailActivity : AppCompatActivity() {
         })
     }
 
-    private fun showDetail(photo: UnsplashPhoto) {
+    private fun showDetail(photo: Photo) {
         Utils.buildGradle(this, photo.urls!!.full.toString(), binding.ivPhoto)
         binding.tvLikes.text = photo.likes.toString()
         binding.tvDownloads.text = photo.downloads.toString()
@@ -63,13 +68,15 @@ class PhotoDetailActivity : AppCompatActivity() {
             }
         }
 
-        with(photo.exif) {
-            binding.tvCameraBrand.text = this?.make ?: ""
-            binding.tvCameraModel.text = this?.model ?: ""
-            binding.tvCameraConfig.text =
-                "${this!!.aperture ?: ""} - ${this.exposureTime?.take(4) ?: ""} - ${this.focalLength?.take(
-                    4
-                ) ?: ""}"
+        if (photo.exif != null){
+            with(photo.exif) {
+                binding.tvCameraBrand.text = this?.make ?: ""
+                binding.tvCameraModel.text = this?.model ?: ""
+                binding.tvCameraConfig.text =
+                    "${this?.aperture ?: ""} - ${this?.exposureTime?.take(4) ?: ""} - ${this?.focalLength?.take(
+                        4
+                    ) ?: ""}"
+            }
         }
     }
 }

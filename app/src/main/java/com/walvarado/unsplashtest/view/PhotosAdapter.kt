@@ -1,19 +1,14 @@
 package com.walvarado.unsplashtest.view
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
-import com.walvarado.unsplashtest.R
 import com.walvarado.unsplashtest.Utils
 import com.walvarado.unsplashtest.databinding.ItemListImageBinding
-import com.walvarado.unsplashtest.model.UnsplashPhoto
+import com.walvarado.unsplashtest.model.Photo
 
-class PhotosAdapter(private val context: Context, private val photos: ArrayList<UnsplashPhoto>, private val itemClickListener: ItemClickListener): RecyclerView.Adapter<PhotosAdapter.PhotosViewHolder>() {
+class PhotosAdapter(private val context: Context, private val photos: ArrayList<Photo>, private val itemClickListener: ItemClickListener): RecyclerView.Adapter<PhotosAdapter.PhotosViewHolder>() {
 
     inner class PhotosViewHolder(val itemListImageBinding: ItemListImageBinding) : RecyclerView.ViewHolder(itemListImageBinding.root)
 
@@ -42,7 +37,7 @@ class PhotosAdapter(private val context: Context, private val photos: ArrayList<
                 }
 
                 itemListImageBinding.ivFavorite.setOnClickListener {
-                    itemClickListener.setFav(this)
+                    itemClickListener.statusFavoriteChange(this, position)
                 }
             }
         }
@@ -50,7 +45,7 @@ class PhotosAdapter(private val context: Context, private val photos: ArrayList<
 
     interface ItemClickListener {
         fun itemClick(id: String)
-        fun setFav(photo: UnsplashPhoto)
+        fun statusFavoriteChange(photo: Photo, position: Int)
     }
 }
 
