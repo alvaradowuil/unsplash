@@ -1,7 +1,8 @@
 package com.walvarado.unsplashtest.view
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.walvarado.unsplashtest.Utils
@@ -28,8 +29,16 @@ class UserDetailActivity : AppCompatActivity() {
         val linkSelf = intent.extras!!.get(EXTRA_LINK_SELF).toString()
         viewModel.getUser(linkSelf)
 
+        setObservers()
+    }
+
+    private fun setObservers() {
         viewModel.userDetail.observe(this, Observer { user ->
             showDetail(user)
+        })
+
+        viewModel.requestError.observe(this, Observer { requestError ->
+            Toast.makeText(this, requestError, Toast.LENGTH_LONG).show()
         })
     }
 

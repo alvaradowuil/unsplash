@@ -36,7 +36,7 @@ class FavoritesFragment : Fragment(), PhotosAdapter.ItemClickListener {
 
         initRecyclerView()
         viewModel.unsplashPhotos.observe(this, Observer { photos ->
-            if (photos.size > 0){
+            if (photos.isNotEmpty()) {
                 binding.emptyLayout.root.visibility = GONE
                 unsplashPhotos.clear()
                 unsplashPhotos.addAll(photos)
@@ -52,7 +52,8 @@ class FavoritesFragment : Fragment(), PhotosAdapter.ItemClickListener {
     }
 
     private fun initRecyclerView() {
-        binding.rvPhotos.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+        binding.rvPhotos.layoutManager =
+            LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         photosAdapter = PhotosAdapter(context!!, unsplashPhotos, this)
         binding.rvPhotos.adapter = photosAdapter
     }

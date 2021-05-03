@@ -3,7 +3,7 @@ package com.walvarado.unsplashtest.model.db
 import androidx.room.Embedded
 import androidx.room.Relation
 
-data class UserAndLinks (
+data class UserAndLinks(
     @Embedded val userDb: UserDb,
     @Relation(
         parentColumn = "id",

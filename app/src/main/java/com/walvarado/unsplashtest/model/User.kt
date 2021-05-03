@@ -3,7 +3,7 @@ package com.walvarado.unsplashtest.model
 import com.google.gson.annotations.SerializedName
 import com.walvarado.unsplashtest.model.db.UserDb
 
-data class User (
+data class User(
     @SerializedName("id") val id: String? = null,
     @SerializedName("username") val username: String? = null,
     @SerializedName("name") val name: String? = null,

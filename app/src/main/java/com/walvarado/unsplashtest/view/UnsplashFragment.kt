@@ -18,7 +18,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.walvarado.unsplashtest.Utils
 import com.walvarado.unsplashtest.databinding.UnsplashFragmentBinding
 import com.walvarado.unsplashtest.model.Photo
-import com.walvarado.unsplashtest.model.db.PhotoDb
 import com.walvarado.unsplashtest.viewmodel.UnsplashViewModel
 
 class UnsplashFragment : Fragment(), PhotosAdapter.ItemClickListener {
@@ -44,13 +43,19 @@ class UnsplashFragment : Fragment(), PhotosAdapter.ItemClickListener {
 
         initRecyclerView()
 
-        if (Utils.isOnline(activity!!)){
+        if (Utils.isOnline(activity!!)) {
             binding.connectionError.root.visibility = GONE
             viewModel.getPhotos()
         } else {
             binding.connectionError.root.visibility = VISIBLE
         }
 
+        setObservers()
+
+        return binding.root
+    }
+
+    private fun setObservers() {
         viewModel.unsplashPhotos.observe(this, Observer { photos ->
             unsplashPhotos.addAll(photos)
             photosAdapter.notifyDataSetChanged()
@@ -60,7 +65,9 @@ class UnsplashFragment : Fragment(), PhotosAdapter.ItemClickListener {
             binding.progress.visibility = if (showProgress) VISIBLE else GONE
         })
 
-        return binding.root
+        viewModel.requestError.observe(this, Observer { requestError ->
+            Toast.makeText(activity!!, requestError, Toast.LENGTH_LONG).show()
+        })
     }
 
     private fun initRecyclerView() {

@@ -7,6 +7,7 @@ import com.walvarado.unsplashtest.BuildConfig
 import com.walvarado.unsplashtest.UnsplashDb
 import com.walvarado.unsplashtest.api.APIService
 import com.walvarado.unsplashtest.api.ClientHttp
+import com.walvarado.unsplashtest.api.RequestError
 import com.walvarado.unsplashtest.model.Photo
 import com.walvarado.unsplashtest.model.db.*
 import kotlinx.coroutines.CoroutineScope
@@ -19,25 +20,30 @@ class UnsplashViewModel : ViewModel() {
 
     val unsplashPhotos = MutableLiveData<List<Photo>>()
     val showProgress = MutableLiveData<Boolean>()
+    val requestError = MutableLiveData<String>()
 
     fun getPhotos() {
         showProgress.postValue(true)
         CoroutineScope(Dispatchers.IO).launch {
-            val call = ClientHttp.getRetrofit(BuildConfig.BASE_URL).create(APIService::class.java).getPhotos(
-                BuildConfig.ACCESS_KEY,
-                "photos/?page=$page",
-                BuildConfig.CLIENT_ID
-            )
+            try{
+                val call = ClientHttp.getRetrofit(BuildConfig.BASE_URL).create(APIService::class.java).getPhotos(
+                    BuildConfig.ACCESS_KEY,
+                    "photos/?page=$page",
+                    BuildConfig.ACCESS_KEY
+                )
 
-            if (call.isSuccessful) {
-                val photos = call.body()
-                page += 1
-                unsplashPhotos.postValue(ArrayList())
-                unsplashPhotos.postValue(photos!!)
-            } else {
-                // TODO: 4/30/2021 Show error
+                if (call.isSuccessful) {
+                    val photos = call.body()
+                    page += 1
+                    unsplashPhotos.postValue(ArrayList())
+                    unsplashPhotos.postValue(photos!!)
+                } else {
+                    requestError.postValue(RequestError.getByValue(call.code()).toString())
+                }
+                showProgress.postValue(false)
+            } catch (e: Throwable) {
+                requestError.postValue(RequestError.getByValue(0).toString())
             }
-            showProgress.postValue(false)
         }
     }
 

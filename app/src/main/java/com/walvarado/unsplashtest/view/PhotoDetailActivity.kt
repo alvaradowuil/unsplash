@@ -2,10 +2,11 @@ package com.walvarado.unsplashtest.view
 
 import android.content.Intent
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.walvarado.unsplashtest.Utils
@@ -33,9 +34,7 @@ class PhotoDetailActivity : AppCompatActivity() {
 
         viewModel = ViewModelProvider(this).get(PhotoDetailViewModel::class.java)
 
-        viewModel.unsplashPhoto.observe(this, Observer { photo ->
-            showDetail(photo)
-        })
+        setObservers()
 
         val isOnline = Utils.isOnline(this)
         viewModel.getPhotos(this, photoId, isOnline)
@@ -46,6 +45,16 @@ class PhotoDetailActivity : AppCompatActivity() {
                 intent.putExtra(UserDetailActivity.EXTRA_LINK_SELF, linkSelf)
                 startActivity(intent)
             }
+        })
+    }
+
+    private fun setObservers() {
+        viewModel.unsplashPhoto.observe(this, Observer { photo ->
+            showDetail(photo)
+        })
+
+        viewModel.requestError.observe(this, Observer { requestError ->
+            Toast.makeText(this, requestError, Toast.LENGTH_LONG).show()
         })
     }
 
@@ -68,7 +77,7 @@ class PhotoDetailActivity : AppCompatActivity() {
             }
         }
 
-        if (photo.exif != null){
+        if (photo.exif != null) {
             with(photo.exif) {
                 binding.tvCameraBrand.text = this?.make ?: ""
                 binding.tvCameraModel.text = this?.model ?: ""

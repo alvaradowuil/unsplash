@@ -3,7 +3,7 @@ package com.walvarado.unsplashtest.model
 import com.google.gson.annotations.SerializedName
 import com.walvarado.unsplashtest.model.db.UserLinksDb
 
-data class UserLinks (
+data class UserLinks(
     @SerializedName("self") val self: String? = null,
     @SerializedName("html") val html: String? = null,
     @SerializedName("photos") val photos: String? = null,

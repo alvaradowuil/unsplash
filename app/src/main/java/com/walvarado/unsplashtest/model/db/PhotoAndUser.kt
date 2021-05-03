@@ -2,9 +2,8 @@ package com.walvarado.unsplashtest.model.db
 
 import androidx.room.Embedded
 import androidx.room.Relation
-import com.walvarado.unsplashtest.model.Exif
 
-data class PhotoAndUser (
+data class PhotoAndUser(
     @Embedded val photo: PhotoDb,
     @Relation(
         parentColumn = "id",

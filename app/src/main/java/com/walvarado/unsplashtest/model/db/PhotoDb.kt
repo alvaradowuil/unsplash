@@ -3,15 +3,12 @@ package com.walvarado.unsplashtest.model.db
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.walvarado.unsplashtest.model.Exif
 import com.walvarado.unsplashtest.model.Photo
-import com.walvarado.unsplashtest.model.PhotoUrl
-import com.walvarado.unsplashtest.model.User
 
 @Entity(
     tableName = "photo"
 )
-data class PhotoDb (
+data class PhotoDb(
     @PrimaryKey() val id: String,
     @ColumnInfo(name = "width") val width: Long? = null,
     @ColumnInfo(name = "height") val height: Long? = null,

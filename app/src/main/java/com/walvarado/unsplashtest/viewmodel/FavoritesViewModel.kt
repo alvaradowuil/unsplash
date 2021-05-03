@@ -1,14 +1,9 @@
 package com.walvarado.unsplashtest.viewmodel
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.walvarado.unsplashtest.BuildConfig
 import com.walvarado.unsplashtest.UnsplashDb
-import com.walvarado.unsplashtest.api.APIService
-import com.walvarado.unsplashtest.api.ClientHttp
-import com.walvarado.unsplashtest.dao.PhotoDao
 import com.walvarado.unsplashtest.model.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -62,7 +57,7 @@ class FavoritesViewModel : ViewModel() {
         }
     }
 
-    fun deleteFavorite(context: Context, photoId: String){
+    fun deleteFavorite(context: Context, photoId: String) {
         CoroutineScope(Dispatchers.IO).launch {
             val dao = UnsplashDb.getInstance(context).photoDao
 
