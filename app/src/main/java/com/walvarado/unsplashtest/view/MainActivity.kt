@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBar
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.walvarado.unsplashtest.R
 import com.walvarado.unsplashtest.databinding.ActivityMainBinding
@@ -27,12 +28,12 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.unsplash_option -> {
-                toolbar.title = "Unsplash"
+                toolbar.title = getString(R.string.option_nav_unsplash)
                 openFragment(UnsplashFragment.newInstance())
                 return true
             }
             R.id.favorites_option -> {
-                toolbar.title = "Favorites"
+                toolbar.title = getString(R.string.option_nav_favorites)
                 openFragment(FavoritesFragment.newInstance())
                 return true
             }
@@ -41,6 +42,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     }
 
     private fun openFragment(fragment: Fragment) {
+        supportFragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.container, fragment)
         transaction.addToBackStack(null)

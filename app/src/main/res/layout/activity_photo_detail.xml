@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tool="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -23,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:background="#33000000"
+            android:background="@color/black_translucent"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -42,7 +41,7 @@
                     android:id="@+id/tvCameraBrand"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#AFFFFFFF"
+                    android:textColor="@color/icons"
                     tools:text="Camera" />
 
             </LinearLayout>
@@ -59,14 +58,14 @@
                     android:id="@+id/tvCameraModel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#AFFFFFFF"
+                    android:textColor="@color/icons"
                     tools:text="Modelo de la camara" />
 
                 <TextView
                     android:id="@+id/tvCameraConfig"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#AFFFFFFF"
+                    android:textColor="@color/icons"
                     tools:text="0.1/4.5/1.2" />
 
             </LinearLayout>
@@ -149,6 +148,6 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="15dp"
-        tools:text="one location, light well studied"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        tools:text="one location, light well studied" />
 </LinearLayout>

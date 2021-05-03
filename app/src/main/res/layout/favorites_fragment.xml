@@ -3,11 +3,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/icons"
     tools:context=".view.FavoritesFragment">
 
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvPhotos"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:text="Hello Favorites" />
+        tools:listitem="@layout/item_list_image"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+    <include
+        android:id="@+id/emptyLayout"
+        layout="@layout/empty_data"
+        android:visibility="gone"/>
 
 </FrameLayout>

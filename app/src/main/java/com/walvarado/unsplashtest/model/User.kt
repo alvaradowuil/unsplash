@@ -1,8 +1,9 @@
 package com.walvarado.unsplashtest.model
 
 import com.google.gson.annotations.SerializedName
+import com.walvarado.unsplashtest.model.db.UserDb
 
-data class UnsplashUser (
+data class User (
     @SerializedName("id") val id: String? = null,
     @SerializedName("username") val username: String? = null,
     @SerializedName("name") val name: String? = null,
@@ -18,4 +19,23 @@ data class UnsplashUser (
     @SerializedName("total_likes") val totalLikes: Long? = null,
     @SerializedName("total_photos") val totalPhotos: Long? = null,
     @SerializedName("accepted_tos") val acceptedTos: Boolean? = null
-)
+) {
+    fun convertToUserDb(photoId: String): UserDb {
+        return UserDb(
+            this.id!!,
+            this.username,
+            this.name,
+            this.firstName,
+            this.lastName,
+            this.portfolioURL,
+            this.bio,
+            this.location,
+            this.instagramUsername,
+            this.totalCollections,
+            this.totalLikes,
+            this.totalPhotos,
+            this.acceptedTos,
+            photoId
+        )
+    }
+}

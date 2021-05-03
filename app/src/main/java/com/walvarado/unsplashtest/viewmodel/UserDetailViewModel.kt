@@ -5,16 +5,14 @@ import androidx.lifecycle.ViewModel
 import com.walvarado.unsplashtest.BuildConfig
 import com.walvarado.unsplashtest.api.APIService
 import com.walvarado.unsplashtest.api.ClientHttp
-import com.walvarado.unsplashtest.model.UnsplashUser
+import com.walvarado.unsplashtest.model.User
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 class UserDetailViewModel: ViewModel() {
 
-    val userDetail = MutableLiveData<UnsplashUser>()
+    val userDetail = MutableLiveData<User>()
 
     fun getUser(linkSelf: String) {
         CoroutineScope(Dispatchers.IO).launch {
