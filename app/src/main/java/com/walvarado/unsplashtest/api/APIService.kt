@@ -1,6 +1,7 @@
 package com.walvarado.unsplashtest.api
 
 import com.walvarado.unsplashtest.model.Photo
+import com.walvarado.unsplashtest.model.SearchPhotoResponse
 import com.walvarado.unsplashtest.model.User
 import retrofit2.Response
 import retrofit2.http.GET
@@ -22,6 +23,14 @@ interface APIService {
         @Url url: String,
         @Query("client_id") clientId: String
     ): Response<Photo>
+
+    @GET
+    suspend fun searchPhoto(
+        @Header("Authorization") accessKey: String,
+        @Url url: String,
+        @Query("client_id") clientId: String,
+        @Query("query") query: String
+    ): Response<SearchPhotoResponse>
 
     @GET
     suspend fun getUserByLinkSelf(

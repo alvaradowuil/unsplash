@@ -14,6 +14,9 @@ interface PhotoDao {
     @Query("SELECT * FROM photo WHERE id = :photoId")
     suspend fun getById(photoId: String): PhotoAndUser
 
+    @Query("SELECT * FROM photo WHERE description LIKE :query")
+    suspend fun searchPhoto(query: String): List<PhotoAndUser>
+
     @Insert
     suspend fun insert(photoDb: PhotoDb)
 

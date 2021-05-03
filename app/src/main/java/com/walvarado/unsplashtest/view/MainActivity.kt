@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         toolbar = supportActionBar!!
 
         binding.navigationView.setOnNavigationItemSelectedListener(this)
+        toolbar.title = getString(R.string.option_nav_unsplash)
         openFragment(UnsplashFragment.newInstance())
     }
 
