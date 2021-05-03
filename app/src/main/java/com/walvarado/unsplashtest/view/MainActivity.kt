@@ -1,9 +1,9 @@
 package com.walvarado.unsplashtest.view
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -42,7 +42,10 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     }
 
     private fun openFragment(fragment: Fragment) {
-        supportFragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        supportFragmentManager.popBackStackImmediate(
+            null,
+            FragmentManager.POP_BACK_STACK_INCLUSIVE
+        );
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.container, fragment)
         transaction.addToBackStack(null)

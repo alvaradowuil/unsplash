@@ -2,7 +2,6 @@ package com.walvarado.unsplashtest.api
 
 import com.walvarado.unsplashtest.model.Photo
 import com.walvarado.unsplashtest.model.User
-import com.walvarado.unsplashtest.model.db.PhotoDb
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Header

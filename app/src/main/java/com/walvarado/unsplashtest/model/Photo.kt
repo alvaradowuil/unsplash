@@ -3,7 +3,7 @@ package com.walvarado.unsplashtest.model
 import com.google.gson.annotations.SerializedName
 import com.walvarado.unsplashtest.model.db.PhotoDb
 
-data class Photo (
+data class Photo(
     @SerializedName("id") val id: String? = null,
     @SerializedName("width") val width: Long? = null,
     @SerializedName("height") val height: Long? = null,

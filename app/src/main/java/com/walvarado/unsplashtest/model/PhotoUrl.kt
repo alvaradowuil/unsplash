@@ -3,7 +3,7 @@ package com.walvarado.unsplashtest.model
 import com.google.gson.annotations.SerializedName
 import com.walvarado.unsplashtest.model.db.PhotoUrlDb
 
-data class PhotoUrl (
+data class PhotoUrl(
     @SerializedName("raw") val raw: String? = null,
     @SerializedName("full") val full: String? = null,
     @SerializedName("regular") val regular: String? = null,

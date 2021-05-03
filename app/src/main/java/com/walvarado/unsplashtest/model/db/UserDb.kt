@@ -17,7 +17,7 @@ import com.walvarado.unsplashtest.model.UserProfileImage
         onDelete = ForeignKey.CASCADE
     )]
 )
-class UserDb (
+class UserDb(
     @PrimaryKey() val id: String,
     @ColumnInfo(name = "username") val username: String? = null,
     @ColumnInfo(name = "name") val name: String? = null,

@@ -12,7 +12,7 @@ import com.bumptech.glide.request.RequestOptions
 
 class Utils {
     companion object {
-        fun buildGradle(context: Context, picturePath: String, imageView: ImageView){
+        fun buildGradle(context: Context, picturePath: String, imageView: ImageView) {
             val requestOption = RequestOptions()
                 .placeholder(R.drawable.progress).centerCrop()
 

@@ -8,13 +8,18 @@ import com.walvarado.unsplashtest.Utils
 import com.walvarado.unsplashtest.databinding.ItemListImageBinding
 import com.walvarado.unsplashtest.model.Photo
 
-class PhotosAdapter(private val context: Context, private val photos: ArrayList<Photo>, private val itemClickListener: ItemClickListener): RecyclerView.Adapter<PhotosAdapter.PhotosViewHolder>() {
+class PhotosAdapter(
+    private val context: Context,
+    private val photos: ArrayList<Photo>,
+    private val itemClickListener: ItemClickListener
+) : RecyclerView.Adapter<PhotosAdapter.PhotosViewHolder>() {
 
-    inner class PhotosViewHolder(val itemListImageBinding: ItemListImageBinding) : RecyclerView.ViewHolder(itemListImageBinding.root)
+    inner class PhotosViewHolder(val itemListImageBinding: ItemListImageBinding) :
+        RecyclerView.ViewHolder(itemListImageBinding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotosViewHolder {
         val itemListImageBinding = ItemListImageBinding
-                .inflate(LayoutInflater.from(parent.context), parent, false)
+            .inflate(LayoutInflater.from(parent.context), parent, false)
 
         return PhotosViewHolder(itemListImageBinding)
     }
@@ -30,7 +35,11 @@ class PhotosAdapter(private val context: Context, private val photos: ArrayList<
                 itemListImageBinding.tvLikes.text = user!!.totalLikes.toString()
 
                 Utils.buildGradle(context, urls!!.full.toString(), itemListImageBinding.ivItem)
-                Utils.buildGradle(context, user!!.profileImage!!.medium.toString(), itemListImageBinding.ivProfile)
+                Utils.buildGradle(
+                    context,
+                    user!!.profileImage!!.medium.toString(),
+                    itemListImageBinding.ivProfile
+                )
 
                 itemListImageBinding.root.setOnClickListener {
                     itemClickListener.itemClick(id!!)
