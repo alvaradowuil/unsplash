@@ -18,7 +18,7 @@ Para desarrollar esta aplicación se utilizaron las siguientes herramientas / te
 - [Glide](https://github.com/bumptech/glide)
 - [Bottom Navigation](https://material.io/components/bottom-navigation/android#using-bottom-navigation)
 - [SearchView](https://developer.android.com/reference/androidx/appcompat/widget/SearchView)
-- [DataBinding](https://developer.android.com/topic/libraries/data-binding)
+- [ViewBinding](https://developer.android.com/topic/libraries/view-binding?hl=es-419)
 - [LiveData](https://developer.android.com/reference/androidx/lifecycle/LiveData)
 
 [Descargar apk de prueba](https://drive.google.com/file/d/11vx_xsfuyUkQLHjQnTwgNLq4r4uWGyks/view?usp=sharing)
